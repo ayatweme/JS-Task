@@ -1,0 +1,33 @@
+<script>
+    function isPandigitalNumber(number) {
+    var numberStr = number.toString();
+
+    if (numberStr.length !== 10) {
+        return false;
+    }
+
+    var digitPresence = Array(10).fill(false);
+
+    for (var i = 0; i < numberStr.length; i++) {
+        var digit = parseInt(numberStr[i]);
+
+        if (digit < 0 || digit > 9) {
+            return false;
+        }
+
+        digitPresence[digit] = true;
+    }
+
+    return digitPresence.every(function (present) {
+        return present;
+    });
+}
+
+// Example usage:
+var number1 = 1234567890;
+var number2 = 9876543210;
+
+console.log(isPandigitalNumber(number1)); // Output: true
+console.log(isPandigitalNumber(number2)); // Output: true
+
+</script>

@@ -1,0 +1,19 @@
+<script>
+var input = prompt("Please enter your birthdate month (1-12):");
+
+var monthNumber = parseInt(input);
+
+if (monthNumber >= 1 && monthNumber <= 12) {
+    var monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    var monthName = monthNames[monthNumber - 1];
+
+    alert("The input: " + monthNumber + "\nThe output: " + monthName);
+} else {
+    alert("Invalid input. Please enter a number between 1 and 12.");
+}
+
+</script>

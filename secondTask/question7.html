@@ -1,0 +1,26 @@
+<script>
+var favoriteDrink = prompt("Please enter your favorite drink:");
+
+var price;
+
+switch (favoriteDrink.toLowerCase()) {
+    case "coffee":
+        price = 2.50;
+        break;
+    case "tea":
+        price = 1.75;
+        break;
+    case "soda":
+        price = 1.25;
+        break;
+    case "water":
+        price = 1.00;
+        break;
+    default:
+        price = "Price not available for that drink.";
+        break;
+}
+
+alert("Your favorite drink is: " + favoriteDrink + "\nPrice: " + price);
+
+</script>
