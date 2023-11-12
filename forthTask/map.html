@@ -1,0 +1,363 @@
+/*
+Instructions: 
+ - You should solve all these questions using .map() function 
+*/
+
+<script>
+  const myString = "aya5";
+const containsNumber = /\d/.test(myString);
+
+if (containsNumber) {
+    console.log("The string contains numbers.");
+} else {
+    console.log("The string does not contain numbers.");
+}
+/*
+ * Exercise 1: 
+ * 
+ * Make an array of numbers that are doubles of the first array
+ *
+ * Test Case: 
+ *
+ * console.log(doubleNumbers([2, 5, 100]));
+ * 
+ * Result:
+ * [4, 10, 200]
+*/
+function doubleNumbers(arr){
+  
+const doubledArray = arr.map(number => number * 2);
+return doubledArray;
+}
+
+const originalArray = [2, 5, 100];
+const doubledArray = doubleNumbers(originalArray);
+
+console.log(doubledArray);
+/*
+ * Exercise 2 : 
+ * 
+ * Take an array of numbers and make them strings
+ *
+ * Test Case: 
+ *
+ * console.log(stringItUp([2, 5, 100]));
+ * 
+ * Result:
+ * ["2", "5", "100"]
+*/
+
+function stringItUp(arr){
+  // your code here
+
+const stringsArray = arr.map(number => number.toString());
+return stringsArray;
+
+}
+
+const array2 = [2, 5, 100];
+const stringArray = stringItUp(array2);
+
+console.log(stringArray);
+
+/*
+ * Exercise 3:  
+ * 
+ * Capitalize each of an array of names
+ *
+ * Test Case: 
+ *
+ * console.log(capitalizeNames(["john", "JACOB", "jinGleHeimer", "schmidt"])); 
+ * 
+ * Result:
+ *  ["John", "Jacob", "Jingleheimer", "Schmidt"]
+*/
+
+function capitalizeNames(arr){
+  // your code here
+  const capitalizedArray = arr.map(name => {
+    const lowercaseName = name.toLowerCase();
+    return lowercaseName.charAt(0).toUpperCase() + lowercaseName.slice(1);
+  });
+
+  return capitalizedArray;
+}
+
+const namesArray = ["john", "JACOB", "jinGleHeimer", "schmidt"];
+const capitalizedArray = capitalizeNames(namesArray);
+
+console.log(capitalizedArray);
+/*
+ * Exercise 4:  
+ * 
+ * Make an array of strings of the names
+ *
+ * Test Case: 
+ *
+ * console.log(namesOnly([
+ *   {
+ *       name: "Angelina Jolie",
+ *       age: 80
+ *   },
+ *   {
+ *       name: "Eric Jones",
+ *       age: 2
+ *   },
+ *   {
+ *       name: "Paris Hilton",
+ *       age: 5
+ *   },
+ *   {
+ *       name: "Kayne West",
+ *       age: 16
+ *   },
+ *   {
+ *       name: "Bob Ziroll",
+ *       age: 100
+ *   }
+ *   ])); 
+ * 
+ * Result:
+ *  ["Angelina Jolie", "Eric Jones", "Paris Hilton", "Kayne West", "Bob Ziroll"]
+*/
+
+function namesOnly(arr){
+  // your code here
+  const namesArray = arr.map(person => person.name);
+  return namesArray;
+}
+
+const peopleArray = [
+  {
+    name: "Angelina Jolie",
+    age: 80,
+  },
+  {
+    name: "Eric Jones",
+    age: 2,
+  },
+  {
+    name: "Paris Hilton",
+    age: 5,
+  },
+  {
+    name: "Kayne West",
+    age: 16,
+  },
+  {
+    name: "Bob Ziroll",
+    age: 100,
+  }
+];
+
+const namesArray2 = namesOnly(peopleArray);
+
+console.log(namesArray2);
+/*
+ * Exercise 5:  
+ * 
+ * Make an array of strings of the names saying whether or not they can go to The Matrix
+ *
+ * Test Case: 
+ *
+ * console.log(makeStrings([
+ *    {
+ *       name: "Angelina Jolie",
+ *       age: 80
+ *   },
+ *   {
+ *       name: "Eric Jones",
+ *       age: 2
+ *   },
+ *   {
+ *       name: "Paris Hilton",
+ *       age: 5
+ *   },
+ *   {
+ *       name: "Kayne West",
+ *       age: 16
+ *   },
+ *   {
+ *       name: "Bob Ziroll",
+ *       age: 100
+ *   }
+ * ]));  
+ * 
+ * Result:
+ * 
+ * ["Angelina Jolie can go to The Matrix", 
+ * "Eric Jones is under age!!", 
+ * "Paris Hilton is under age!!", 
+ * "Kayne West is under age!!", 
+ * "Bob Ziroll can go to The Matrix"]
+ *  ["John", "Jacob", "Jingleheimer", "Schmidt"]
+ */
+
+function makeStrings(arr){
+  // your code here
+  const stringsArray = arr.map(person => {
+    if (person.age >= 18) {
+      return `${person.name} can go to The Matrix`;
+    } else {
+      return `${person.name} is under age!!`;
+    }
+  });
+  return stringsArray;
+}
+
+const stringsArray = makeStrings(peopleArray);
+
+console.log(stringsArray);
+/*
+ * Exercise 6:  
+ * 
+ * Make an array of the names in h1s, and the ages in h2s
+ *
+ * Test Case: 
+ *
+ * console.log(readyToPutInTheDOM([
+ *   {
+ *       name: "Angelina Jolie",
+ *       age: 80
+ *   },
+ *   {
+ *       name: "Eric Jones",
+ *       age: 2
+ *   },
+ *   {
+ *       name: "Paris Hilton",
+ *       age: 5
+ *   },
+ *   {
+ *       name: "Kayne West",
+ *       age: 16
+ *   },
+ *   {
+ *       name: "Bob Ziroll",
+ *       age: 100
+ *   }
+ * ])); 
+ * 
+ * Result:
+ * 
+ * ["<h1>Angelina Jolie</h1><h2>80</h2>", 
+ * "<h1>Eric Jones</h1><h2>2</h2>", 
+ * "<h1>Paris Hilton</h1><h2>5</h2>", 
+ * "<h1>Kayne West</h1><h2>16</h2>", 
+ * "<h1>Bob Ziroll</h1><h2>100</h2>"]
+ */
+ function readyToPutInTheDOM(arr) {
+  // Use the map method to create an array of HTML strings
+  const htmlArray = arr.map(person => {
+    const name = `<h1>${person.name}</h1>`;
+    const age = `<h2>${person.age}</h2>`;
+    return name + age;
+  });
+
+  return htmlArray;
+}
+
+// Sample data (peopleArray) and test the function
+const peopleArray1 = [
+  { name: 'Alice', age: 30 },
+  { name: 'Bob', age: 25 },
+  { name: 'Charlie', age: 35 }
+];
+
+const htmlStringsArray = readyToPutInTheDOM(peopleArray1);
+console.log(htmlStringsArray);
+
+
+/*
+* Exercise 7:
+* Write a function called doubleValues which accepts an array and returns a new array with all the values in the array passed to the function doubled
+*
+* Test Cases:
+*   Test Case 1:  doubleValues([1,2,3]) 
+*   Test Case 2:  doubleValues([1,-2,-3])  
+*
+* Result:
+* Test Case 1: [2,4,6] 
+* Test Case 2: [2,-4,-6]
+*/
+function doubleValues(arr) {
+    return arr.map(value => value * 2);
+}
+
+// Test cases
+const tc1 = doubleValues([1, 2, 3]);
+const tc2 = doubleValues([1, -2, -3]);
+console.log("Test Case 1: ", tc1);
+console.log("Test Case 2: ", tc2);
+
+  
+  /*
+  * Exercise 8:
+  * Write a function called valTimesIndex which accepts an array and returns a new array with each value multiplied by the index it is currently at in the array.
+  *
+  *
+  * Test Cases :
+  *   Test Case 1:  valTimesIndex([1,2,3])  
+  *   Test Case 2:  valTimesIndex([1,-2,-3]) 
+  * 
+  * Result
+  * Test Case 1: [0,2,6]
+  * Test Case 2: [0,-2,-6]
+  */
+  function valTimesIndex(arr) {
+    return arr.map((value, index) => value * index);
+}
+
+// Test cases
+const tc11 = valTimesIndex([1, 2, 3]);
+const tc22 = valTimesIndex([1, -2, -3]);
+console.log("Test Case 1: ", tc11);
+console.log("Test Case 2: ", tc22);
+
+  
+  /*
+  * Exercise 9:
+  * Write a function called extractKey which accepts an array of objects and some key and returns a new array with the value
+  * of that key in each object.
+  * 
+  * Test Case:
+  * extractKey([{name: 'Elie'}, {name: 'Tim'}, {name: 'Matt'}, {name: 'Colt'}], 'name') 
+  * 
+  * Result:
+  * ['Elie', 'Tim', 'Matt', 'Colt']
+  */
+  
+  function extractKey(arr, key) {
+    const result = arr.map(obj => obj[key]);
+
+    return result;
+}
+
+// test case
+const tc111 = extractKey([{ name: 'Elie' }, { name: 'Tim' }, { name: 'Matt' }, { name: 'Colt' }], 'name');
+console.log('Test Case: ', tc111);
+
+  
+  /*
+  * Exercise 10:
+  * Write a function called extractFullName which accepts an array of objects and returns a new array with the value of the key with a name of "first" and the value of a key with the name of  "last" in each object, concatenated together with a space. 
+  * 
+  * Examples:
+  * extractFullName([{first: 'Elie', last:"Schoppik"}, {first: 'Tim', last:"Garcia"}, {first: 'Matt', last:"Lane"}, {first: 'Colt', last:"Steele"}]) // ['Elie Schoppik', 'Tim Garcia', 'Matt Lane', 'Colt Steele']
+  */
+ function extractFullName() {
+    let people = [
+        { firstName: "John", lastName: "Doe" },
+        { firstName: "Jane", lastName: "Smith" }
+    ];
+
+    let fullNames = people.map(person => `${person.firstName} ${person.lastName}`);
+
+    return fullNames;
+}
+
+// test case
+const tc112 = extractFullName();
+console.log('Test Case: ', tc112);
+
+</script>
