@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Storage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: 4px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<form id="personalDataForm">
+  <label for="name">Name:</label>
+  <input type="text" id="name" required>
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" required>
+
+  <label>Gender:</label>
+  <input type="radio" id="female" name="gender" value="female">
+  <label for="female">Female</label>
+  <input type="radio" id="male" name="gender" value="male">
+  <label for="male">Male</label>
+
+  <label for="description">Brief Description:</label>
+  <textarea id="description" rows="4"></textarea>
+
+  <label for="major">Major and University:</label>
+  <input type="text" id="major" required>
+
+  <label>Programming Languages (Select at least 3):</label>
+  <input type="checkbox" id="language1" value="JavaScript">
+  <label for="language1">JavaScript</label>
+  <input type="checkbox" id="language2" value="Python">
+  <label for="language2">Python</label>
+  <input type="checkbox" id="language3" value="Java">
+  <label for="language3">Java</label>
+
+  <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<div id="cardsContainer"></div>
+
+<script>
+  function submitForm() {
+    var name = document.getElementById('name').value;
+    var age = document.getElementById('age').value;
+    var gender = document.querySelector('input[name="gender"]:checked').value;
+    var description = document.getElementById('description').value;
+    var major = document.getElementById('major').value;
+    var languages = [];
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    checkboxes.forEach(function (checkbox) {
+      languages.push(checkbox.value);
+    });
+
+    var userData = {
+      name: name,
+      age: age,
+      gender: gender,
+      description: description,
+      major: major,
+      languages: languages
+    };
+
+    // Retrieve existing data from local storage
+    var existingData = JSON.parse(localStorage.getItem('userDataArray')) || [];
+
+    // Add new data to the array
+    existingData.push(userData);
+
+    // Save the updated array back to local storage
+    localStorage.setItem('userDataArray', JSON.stringify(existingData));
+
+    // Display the card
+    displayCard(userData);
+  }
+
+  function loadExistingData() {
+    var existingData = JSON.parse(localStorage.getItem('userDataArray')) || [];
+
+    // Display existing cards
+    existingData.forEach(function (data) {
+      displayCard(data);
+    });
+  }
+
+  function displayCard(userData) {
+    var cardContainer = document.getElementById('cardsContainer');
+    var card = document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML = `
+      <strong>Name:</strong> ${userData.name} <br>
+      <strong>Age:</strong> ${userData.age} <br>
+      <strong>Gender:</strong> ${userData.gender} <br>
+      <strong>Description:</strong> ${userData.description} <br>
+      <strong>Major and University:</strong> ${userData.major} <br>
+      <strong>Programming Languages:</strong> ${userData.languages.join(', ')}
+    `;
+
+    cardContainer.appendChild(card);
+  }
+
+  // Load existing data on page load
+  window.onload = function () {
+    loadExistingData();
+  };
+</script>
+
+</body>
+</html>

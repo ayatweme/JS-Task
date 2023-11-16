@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration and Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Registration Form -->
+<form id="registrationForm">
+  <label for="firstName">First Name:</label>
+  <input type="text" id="firstName" required>
+
+  <label for="lastName">Last Name:</label>
+  <input type="text" id="lastName" required>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" required>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" required>
+
+  <button type="button" onclick="registerUser()">Register</button>
+</form>
+
+<!-- Login Form -->
+<form id="loginForm">
+  <label for="loginEmail">Email:</label>
+  <input type="email" id="loginEmail" required>
+
+  <label for="loginPassword">Password:</label>
+  <input type="password" id="loginPassword" required>
+
+  <button type="button" onclick="loginUser()">Login</button>
+</form>
+
+<script>
+  function registerUser() {
+    var firstName = document.getElementById('firstName').value;
+    var lastName = document.getElementById('lastName').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    var user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    };
+
+    // Retrieve existing users from local storage
+    var existingUsers = JSON.parse(localStorage.getItem('userArray')) || [];
+
+    // Check if the email is already registered
+    var isEmailTaken = existingUsers.some(function (user) {
+      return user.email === email;
+    });
+
+    if (!isEmailTaken) {
+      // Add new user to the array
+      existingUsers.push(user);
+
+      // Save the updated array back to local storage
+      localStorage.setItem('userArray', JSON.stringify(existingUsers));
+
+      alert('Registration successful!');
+    } else {
+      alert('Email is already registered. Please use a different email.');
+    }
+  }
+
+  function loginUser() {
+    var loginEmail = document.getElementById('loginEmail').value;
+    var loginPassword = document.getElementById('loginPassword').value;
+
+    // Retrieve existing users from local storage
+    var existingUsers = JSON.parse(localStorage.getItem('userArray')) || [];
+
+    // Check if the provided email and password match any stored user
+    var isLoginSuccessful = existingUsers.some(function (user) {
+      return user.email === loginEmail && user.password === loginPassword;
+    });
+
+    if (isLoginSuccessful) {
+      alert('Login successful!');
+    } else {
+      alert('Invalid email or password. Please try again.');
+    }
+  }
+</script>
+
+</body>
+</html>

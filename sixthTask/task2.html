@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Storage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: 4px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<form id="projectDetailsForm">
+  <label for="subject">Subject:</label>
+  <input type="text" id="subject" required>
+
+  <label for="description">Description:</label>
+  <textarea id="description" rows="4" required></textarea>
+
+  <label for="userTypes">User Types:</label>
+  <input type="text" id="userTypes" required>
+
+  <label for="technologyUsed">Technology Used:</label>
+  <input type="text" id="technologyUsed" required>
+
+  <button type="button" onclick="submitProject()">Submit</button>
+</form>
+
+<div id="projectCardsContainer"></div>
+
+<script>
+  function submitProject() {
+    // Get project details from the form
+    var subject = document.getElementById('subject').value;
+    var description = document.getElementById('description').value;
+    var userTypes = document.getElementById('userTypes').value;
+    var technologyUsed = document.getElementById('technologyUsed').value;
+
+    // Create project object
+    var projectData = {
+      subject: subject,
+      description: description,
+      userTypes: userTypes,
+      technologyUsed: technologyUsed
+    };
+
+    // Retrieve existing projects from session storage
+    var existingProjects = JSON.parse(sessionStorage.getItem('projectDataArray')) || [];
+
+    // Add new project data to the array
+    existingProjects.push(projectData);
+
+    // Save the updated array back to session storage
+    sessionStorage.setItem('projectDataArray', JSON.stringify(existingProjects));
+
+    // Display the project card
+    displayProjectCard(projectData);
+  }
+
+  function loadExistingProjects() {
+    var existingProjects = JSON.parse(sessionStorage.getItem('projectDataArray')) || [];
+
+    // Display existing project cards
+    existingProjects.forEach(function (project) {
+      displayProjectCard(project);
+    });
+  }
+
+  function displayProjectCard(projectData) {
+    var projectCardsContainer = document.getElementById('projectCardsContainer');
+    var card = document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML = `
+      <strong>Subject:</strong> ${projectData.subject} <br>
+      <strong>Description:</strong> ${projectData.description} <br>
+      <strong>User Types:</strong> ${projectData.userTypes} <br>
+      <strong>Technology Used:</strong> ${projectData.technologyUsed}
+    `;
+
+    // Append card to the container
+    projectCardsContainer.appendChild(card);
+  }
+
+  // Load existing projects on page load
+  window.onload = function () {
+    loadExistingProjects();
+  };
+</script>
+
+</body>
+</html>
