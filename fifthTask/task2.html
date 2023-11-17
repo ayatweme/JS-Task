@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Show and Hide Example</title>
+    <style>
+        .box {
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .questionTitle {
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .answer {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .hideButton {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box1">
+        <p class="questionTitle" onclick="toggleAnswer('box1')">Question 1:</p>
+        <div class="answer" id="answer1">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p class="hideButton" onclick="toggleAnswer('box1')">Hide Answer</p>
+        </div>
+    </div>
+
+    <div class="box" id="box2">
+        <p class="questionTitle" onclick="toggleAnswer('box2')">Question 2:</p>
+        <div class="answer" id="answer2">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p class="hideButton" onclick="toggleAnswer('box2')">Hide Answer</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

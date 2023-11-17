@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Password Checker-Task 3</title>
+</head>
+<body>
+    <div>
+        <label for="password">Password (min 6 character):</label>
+        <input type="password" id="password" oninput="checkPassword()">
+    </div>
+
+    <div>
+        <label for="confirmPassword">Repeat Password:</label>
+        <input type="password" id="confirmPassword" oninput="checkPassword()">
+    </div>
+
+    <p id="passwordMessage"></p>
+
+    <button id="submitButton" style="display:none" onclick="submitForm()">Submit</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,4 +1,63 @@
 #clickableElement {
     padding: 10px;
     cursor: pointer;
+    width: 20%;
+    text-align: center;
+    border: solid 2px;
+    font-size: 24px;
+}
+
+#flagImage {
+    max-width: 100%;
+    height: auto;
+}
+#passwordMessage {
+    color: red;
+}
+.box {
+    border: 1px solid #000;
+    padding: 10px;
+    margin: 10px 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #f0f0f0;
+    width: 20%;
+
+}
+
+.questionTitle {
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    color: blue;
+
+
+}
+
+.answer {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+
+}
+
+.hideButton {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+#textInput {
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    width: 50%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+#colorBox {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #000;
+    margin-bottom: 10px;
 }

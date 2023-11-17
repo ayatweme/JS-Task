@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Text Input - Task 5</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+   
+
+    <div>
+        <label for="fontSize">Font Size:</label>
+        <select id="fontSize" onchange="changeFontSize()">
+            <option value="12">12px</option>
+            <option value="16">16px</option>
+            <option value="20">20px</option>
+        </select>
+   
+        <label for="fontType">Font Type:</label>
+        <select id="fontType" onchange="changeFontType()">
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="Times New Roman, serif">Times New Roman</option>
+            <option value="Courier New, monospace">Courier New</option>
+        </select>
+ 
+        <input type="checkbox" id="italicCheckbox" onchange="toggleItalic()"> <label for="italicCheckbox">Italic</label>
+        <input type="checkbox" id="boldCheckbox" onchange="toggleBold()"> <label for="boldCheckbox">Bold</label>
+        <input type="checkbox" id="underlineCheckbox" onchange="toggleUnderline()"> <label for="underlineCheckbox">Underline</label>
+    </div>
+    <div>
+        <br>
+        <textarea type="text" id="textInput">The quick brown fox jumps over the lazy dog</textarea>
+
+    </div>
+    <script src="script.js"></script>
+
+</body>
+</html>
