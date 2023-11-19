@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,9 +12,14 @@
       background-color: #f4f4f4;
     }
 
+    .form-container {
+      display: flex;
+      justify-content: space-around;
+    }
+
     form {
-      max-width: 400px;
-      margin: auto;
+      flex: 0 1 22.5%;
+      /* Adjust the width of each form as needed */
       background-color: #fff;
       padding: 20px;
       border-radius: 8px;
@@ -47,92 +53,172 @@
     button:hover {
       background-color: #45a049;
     }
+
+    .error-message {
+      color: red;
+      margin: 5px 0px;
+      padding: 5px 0px;
+      font-size: 14px;
+    }
   </style>
 </head>
+
 <body>
 
-<!-- Registration Form -->
-<form id="registrationForm">
-  <label for="firstName">First Name:</label>
-  <input type="text" id="firstName" required>
+  <div class="form-container">
+    <!-- Registration Form -->
+    <form id="registrationForm">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" required pattern="[A-Za-z]+" title="Please enter only letters">
+      <span class="error-message" id="errorFirstName"></span>
 
-  <label for="lastName">Last Name:</label>
-  <input type="text" id="lastName" required>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" required pattern="[A-Za-z]+" title="Please enter only letters">
+      <span class="error-message" id="errorLastName"></span>
 
-  <label for="email">Email:</label>
-  <input type="email" id="email" required>
+      <label for="BirthDate">BirthDate:</label>
+      <input type="date" id="BirthDate" required>
+      <span class="error-message" id="errorBirthDate"></span>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Please enter a valid email address">
+      <span class="error-message" id="errorEmail"></span>
 
-  <button type="button" onclick="registerUser()">Register</button>
-</form>
+      <label for="cemail">Confirm Email:</label>
+      <input type="email" id="cemail" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Please enter a valid email address">
+      <span class="error-message" id="errorConfirmEmail"></span>
 
-<!-- Login Form -->
-<form id="loginForm">
-  <label for="loginEmail">Email:</label>
-  <input type="email" id="loginEmail" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" required pattern="^(?=.*[A-Z])(?=.*\d{2,})(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,32}" title="Password must start with a capital letter, have at least two numbers, and include at least one special character">
+      <span class="error-message" id="errorPassword"></span>
 
-  <label for="loginPassword">Password:</label>
-  <input type="password" id="loginPassword" required>
+      <label for="cpassword">Confirm Password:</label>
+      <input type="password" id="cpassword" required>
+      <span class="error-message" id="errorConfirmPassword"></span>
 
-  <button type="button" onclick="loginUser()">Login</button>
-</form>
+      <button type="button" onclick="registerUser()">Register</button>
+    </form>
 
-<script>
-  function registerUser() {
-    var firstName = document.getElementById('firstName').value;
-    var lastName = document.getElementById('lastName').value;
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
+    <!-- Login Form -->
+    <form id="loginForm">
+      <label for="loginEmail">Email:</label>
+      <input type="email" id="loginEmail" required>
 
-    var user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password
-    };
+      <label for="loginPassword">Password:</label>
+      <input type="password" id="loginPassword" required>
 
-    // Retrieve existing users from local storage
-    var existingUsers = JSON.parse(localStorage.getItem('userArray')) || [];
+      <button type="button" onclick="loginUser()">Login</button>
+    </form>
+  </div>
 
-    // Check if the email is already registered
-    var isEmailTaken = existingUsers.some(function (user) {
-      return user.email === email;
-    });
+  <script>
+    function registerUser() {
+      // Reset error messages
+      clearErrorMessages();
 
-    if (!isEmailTaken) {
-      // Add new user to the array
-      existingUsers.push(user);
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var birthdate = document.getElementById('BirthDate').value;
+      var email = document.getElementById('email').value;
+      var confirmEmail = document.getElementById('cemail').value;
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('cpassword').value;
 
-      // Save the updated array back to local storage
-      localStorage.setItem('userArray', JSON.stringify(existingUsers));
+      // Validation checks
+      var nameRegex = /^[A-Za-z]+$/;
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var passwordRegex = /^(?=.*[A-Z])(?=.*\d{2,})(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,32}$/;
 
-      alert('Registration successful!');
-    } else {
-      alert('Email is already registered. Please use a different email.');
+      // Check if the name has just letters
+      if (!nameRegex.test(firstName)) {
+        displayError("errorFirstName", "Please enter only letters for the First Name field.");
+      }
+
+      if (!nameRegex.test(lastName)) {
+        displayError("errorLastName", "Please enter only letters for the Last Name field.");
+      }
+
+      // Check if the birthdate is entered correctly
+      var currentDate = new Date();
+      var inputDate = new Date(birthdate);
+      if (inputDate >= currentDate) {
+        displayError("errorBirthDate", "Please enter a valid birthdate.");
+      }
+
+      // Check if the emails match and have a valid structure
+      if (email !== confirmEmail || !emailRegex.test(email) || !emailRegex.test(confirmEmail)) {
+        displayError("errorEmail", "Please enter a valid email address.");
+        displayError("errorConfirmEmail", "Email confirmation must match the entered email.");
+      }
+
+      // Check if the password matches the criteria
+      if (!passwordRegex.test(password) || password !== confirmPassword) {
+        displayError("errorPassword", "Please enter a valid password.");
+        displayError("errorConfirmPassword", "Password confirmation must match the entered password.");
+      }
+
+      // Retrieve existing users from local storage
+      var existingUsers = JSON.parse(localStorage.getItem('userArray')) || [];
+
+      // Check if the email is already registered
+      var isEmailTaken = existingUsers.some(function (user) {
+        return user.email === email;
+      });
+
+      if (!isEmailTaken) {
+        // Add new user to the array
+        var user = {
+          firstName: firstName,
+          lastName: lastName,
+          birthdate: birthdate,
+          email: email,
+          password: password
+        };
+
+        existingUsers.push(user);
+
+        // Save the updated array back to local storage
+        localStorage.setItem('userArray', JSON.stringify(existingUsers));
+
+        alert('Registration successful!');
+      } else {
+        alert('Email is already registered. Please use a different email.');
+      }
     }
-  }
 
-  function loginUser() {
-    var loginEmail = document.getElementById('loginEmail').value;
-    var loginPassword = document.getElementById('loginPassword').value;
-
-    // Retrieve existing users from local storage
-    var existingUsers = JSON.parse(localStorage.getItem('userArray')) || [];
-
-    // Check if the provided email and password match any stored user
-    var isLoginSuccessful = existingUsers.some(function (user) {
-      return user.email === loginEmail && user.password === loginPassword;
-    });
-
-    if (isLoginSuccessful) {
-      alert('Login successful!');
-    } else {
-      alert('Invalid email or password. Please try again.');
+    function displayError(elementId, message) {
+      var errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
     }
-  }
-</script>
+
+    function clearErrorMessages() {
+      var errorElements = document.querySelectorAll('.error-message');
+      errorElements.forEach(function (element) {
+        element.textContent = '';
+      });
+    }
+
+    function loginUser() {
+      clearErrorMessages();
+      var loginEmail = document.getElementById('loginEmail').value;
+      var loginPassword = document.getElementById('loginPassword').value;
+
+      // Retrieve existing users from local storage
+      var existingUsers = JSON.parse(localStorage.getItem('userArray')) || [];
+
+      // Check if the provided email and password match any stored user
+      var isLoginSuccessful = existingUsers.some(function (user) {
+        return user.email === loginEmail && user.password === loginPassword;
+      });
+
+      if (isLoginSuccessful) {
+        alert('Login successful!');
+      } else {
+        alert('Invalid email or password. Please try again.');
+      }
+    }
+  </script>
 
 </body>
+
 </html>
